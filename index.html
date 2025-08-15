@@ -14,422 +14,68 @@
 
 
 </head>
-  <body>
+<body>
 
-<!-- Inicio do bd -->
-<div class=" bd container">  
-
-        <!-- menu superior -->
-        <div class="head1  container text-center text-light">
-            <div class="row">
-                <div class="menu-1 col-2">
-                
-                    <div class="menu-iten-1"></div>
-                    <div class="menu-iten-1"></div>
-                    <div class="menu-iten-1"></div>
-
-                </div>
-            
-                <div class="col-8">
+<div class="container bd">
+    <div class="head1 container text-center text-light">
+        <div class="row">
+            <div class="col-12">
                 <img class="logo" src="./assets/images/logo_of_1.png" alt="logo minha meta">
-                </div>
-            
-                <div class=" menu-2 col-2">
-                    <div class="menu-iten-2"></div>
-                    <div class="menu-iten-2"></div>
-                    <div class="menu-iten-2"></div>
-                </div>
             </div>
         </div>
-        <!-- fim do menu superior -->
+    </div>
 
-<!-- Inicio Contador -->
-  <div class="counter1 container text-center text-light">
-    <div class="row">
-        
-        <div class="col">
-                <div class="text2 text-start">Gasto total</div>
+    <div class="container">
+        <h1 class="title1">Gestão de Contatos</h1>
+        <div id="line"></div>
 
-            <div class="flex-container">
-                <div class="moeda text2 col-2">R$</div>
-                <div class="valor  text-start">12.756<span class="cents">,00</span></div>
-            </div>
+        <!-- Formulário para Adicionar Contato -->
+        <div class="p-4">
+            <h2 class="title1">Adicionar Novo Contato</h2>
+            <form id="add-contact-form">
+                <div class="mb-3">
+                    <label for="name" class="form-label text-light">Nome</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label text-light">Telefone</label>
+                    <input type="tel" class="form-control" id="phone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label text-light">Status</label>
+                    <select class="form-select" id="status">
+                        <option>Contato não efetuado</option>
+                        <option>Contato efetuado</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Adicionar Contato</button>
+            </form>
         </div>
 
-        <div class="col">
-          <div class="text2 text-start">Orçamento para o mês</div>
+        <div id="line"></div>
 
-      <div class="flex-container">
-          <div class="moeda text2 col-2">R$</div>
-          <div class="valor  text-start">13.000<span class="cents">,00</span></div>
-      </div>
-  </div>
+        <!-- Área para Colar Dados da Planilha -->
+        <div class="p-4">
+            <h2 class="title1">Colar Dados da Planilha</h2>
+            <div class="mb-3">
+                <textarea class="form-control" id="spreadsheet-data" rows="5" placeholder="Cole aqui os dados da planilha (Nome, Telefone, Status), separados por tabulação."></textarea>
+            </div>
+            <button id="paste-data-btn" class="btn btn-secondary">Adicionar Contatos da Planilha</button>
+        </div>
 
+        <div id="line"></div>
+
+        <!-- Lista de Contatos -->
+        <div class="p-4">
+            <h2 class="title1">Lista de Contatos</h2>
+            <div id="contact-list" class="lista-lancamentos">
+                <!-- Contatos serão adicionados aqui via JavaScript -->
+            </div>
+        </div>
     </div>
-  </div>
-<!-- fim do contador -->
-
-<!-- Inicio barra de progresso -->
-  <div class="barra">
-    <div class="barra-loading-container">
-      <div class="barra-loading"></div>
-    </div>
-    <div class="text2 text-center">Sobra:R$ 244,00</div>
-    <div class="text2 text-center">Meta de Economia: R$2000,00</div>
-  </div> 
-<!-- fim barra de progresso -->
-
-<!-- Início ultimos Lançamentos -->
-  <div class="ultimos-lancamentos">
-    <h1 class="title1"> ÚLTIMOS LANÇAMENTOS</h1>
-
-    <div id="line"></div>
-    
-    <div class="menu-ultimos-lancamentos text-center row">
-      <div class="b-menu-ultimos-lancamentos col-4">DESPESAS</div>
-      <div class="b-menu-ultimos-lancamentos col-4">RECEITAS</div>
-      <div class="b-menu-ultimos-lancamentos col-4">ESTATÍSTICAS</div>
-    
-    </div>
-
 </div>
-<!-- Fim da parte superior -->
 
-
-<!-- Inicio da Lista de lançamentos -->
-
-<div class="lista-lancamentos">
-  <div class="lancamento  text-center row">
-      <div class="data-lancamento  col-2">12/12</div>
-      <div class="simbolo-lancamento  col-1">$</div>
-              
-      <div class="id-lancamento  col-8">
-                  <div class="identicicacao">Identificação da Despesa</div>
-                  
-                    <div class="text-subcategoria flex-container">
-                      <div class="categoria-lancamento">Categoria</div>
-                      <div class="subcategoria-lancamento">Subcategoria</div>
-                    </div>
-      </div>
-
-                
-      <div class="menu-lancamento col-1">
-                <div class="menu-iten-3"></div>
-                <div class="menu-iten-3"></div>
-                <div class="menu-iten-3"></div>
-      </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-  <div class="lancamento  text-center row">
-    <div class="data-lancamento  col-2">12/12</div>
-    <div class="simbolo-lancamento  col-1">$</div>
-            
-    <div class="id-lancamento  col-8">
-                <div class="identicicacao">Identificação da Despesa</div>
-                
-                  <div class="text-subcategoria flex-container">
-                    <div class="categoria-lancamento">Categoria</div>
-                    <div class="subcategoria-lancamento">Subcategoria</div>
-                </div>
-    </div>
-
-              
-    <div class="menu-lancamento col-1">
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-              <div class="menu-iten-3"></div>
-    </div>
-  </div>
-
-
-</div>
-<!-- Fim da lista de lançamentos  -->
-  <div class="button-add">+</div>
-</div>
-<!-- Fim ultimos Lançamentos -->
-
-<!-- Inicio do rodape -->
-<div class="rodape"></div>
-
-
-</div>
-<!-- fim do bd -->
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
+<script src="./assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
 </html>
