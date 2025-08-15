@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactList = document.getElementById('contact-list');
     const submitButton = addContactForm.querySelector('button[type="submit"]');
 
-    let contacts = [];
+    const API_URL = 'http://localhost:3000/api/contacts';
 
-    function renderContacts() {
+    function renderContacts(contacts) {
         contactList.innerHTML = '';
+        if (!contacts) return;
         contacts.forEach(contact => {
             const contactDiv = document.createElement('div');
             contactDiv.className = 'lancamento text-center row align-items-center';
@@ -26,80 +27,109 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    async function fetchContacts() {
+        try {
+            const response = await fetch(API_URL);
+            const contacts = await response.json();
+            renderContacts(contacts);
+        } catch (error) {
+            console.error('Erro ao buscar contatos:', error);
+        }
+    }
+
     function resetForm() {
         addContactForm.reset();
         delete addContactForm.dataset.editingId;
         submitButton.textContent = 'Adicionar Contato';
     }
 
-    addContactForm.addEventListener('submit', (event) => {
+    addContactForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const nameInput = document.getElementById('name');
-        const phoneInput = document.getElementById('phone');
-        const statusInput = document.getElementById('status');
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const status = document.getElementById('status').value;
         const editingId = addContactForm.dataset.editingId;
 
-        if (editingId) {
-            const contactToUpdate = contacts.find(c => c.id === Number(editingId));
-            if (contactToUpdate) {
-                contactToUpdate.name = nameInput.value;
-                contactToUpdate.phone = phoneInput.value;
-                contactToUpdate.status = statusInput.value;
-            }
-        } else {
-            const newContact = {
-                id: Date.now(),
-                name: nameInput.value,
-                phone: phoneInput.value,
-                status: statusInput.value
-            };
-            contacts.push(newContact);
-        }
+        const contactData = { name, phone, status };
 
-        renderContacts();
-        resetForm();
+        try {
+            if (editingId) {
+                await fetch(`${API_URL}/${editingId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contactData)
+                });
+            } else {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contactData)
+                });
+            }
+            resetForm();
+            fetchContacts();
+        } catch (error) {
+            console.error('Erro ao salvar contato:', error);
+        }
     });
 
-    pasteDataBtn.addEventListener('click', () => {
+    pasteDataBtn.addEventListener('click', async () => {
         const data = spreadsheetData.value.trim();
         if (!data) return;
+
         const lines = data.split('\n');
-        const newContacts = lines.map(line => {
+        const contactPromises = lines.map(line => {
             const [name, phone, status] = line.split('	');
             if (name && phone && status) {
-                return {
-                    id: Date.now() + Math.random(),
-                    name: name.trim(),
-                    phone: phone.trim(),
-                    status: status.trim()
-                };
+                return fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name.trim(), phone: phone.trim(), status: status.trim() })
+                });
             }
-            return null;
-        }).filter(Boolean);
+            return Promise.resolve();
+        });
 
-        contacts = contacts.concat(newContacts);
-        renderContacts();
-        spreadsheetData.value = '';
+        try {
+            await Promise.all(contactPromises);
+            spreadsheetData.value = '';
+            fetchContacts();
+        } catch (error) {
+            console.error('Erro ao colar contatos:', error);
+        }
     });
 
-    contactList.addEventListener('click', (event) => {
+    contactList.addEventListener('click', async (event) => {
         const target = event.target;
-        const contactId = Number(target.dataset.id);
+        const contactId = target.dataset.id;
 
         if (target.classList.contains('delete-btn')) {
-            contacts = contacts.filter(c => c.id !== contactId);
-            renderContacts();
+            try {
+                await fetch(`${API_URL}/${contactId}`, { method: 'DELETE' });
+                fetchContacts();
+            } catch (error) {
+                console.error('Erro ao excluir contato:', error);
+            }
         }
 
         if (target.classList.contains('edit-btn')) {
-            const contactToEdit = contacts.find(c => c.id === contactId);
-            if (contactToEdit) {
-                document.getElementById('name').value = contactToEdit.name;
-                document.getElementById('phone').value = contactToEdit.phone;
-                document.getElementById('status').value = contactToEdit.status;
-                addContactForm.dataset.editingId = contactId;
-                submitButton.textContent = 'Atualizar Contato';
+            try {
+                const response = await fetch(`${API_URL}`);
+                const contacts = await response.json();
+                const contactToEdit = contacts.find(c => c.id == contactId);
+                if (contactToEdit) {
+                    document.getElementById('name').value = contactToEdit.name;
+                    document.getElementById('phone').value = contactToEdit.phone;
+                    document.getElementById('status').value = contactToEdit.status;
+                    addContactForm.dataset.editingId = contactId;
+                    submitButton.textContent = 'Atualizar Contato';
+                }
+            } catch (error) {
+                console.error('Erro ao buscar dados para edição:', error);
             }
         }
     });
+
+    // Initial fetch of contacts
+    fetchContacts();
 });
